@@ -1,13 +1,10 @@
-FROM ubuntu:latest AS build
+FROM eclipse-temurin:17-jdk AS build
 
-RUN apt-get update
-RUN apt-get install openjdk-17-jdk -y
+RUN apt-get update && apt-get install -y maven
 
 COPY . .
-RUN apt-get install maven -y
-RUN mvn clean install
 
-FROM openjdk:17-jdk-slim
+RUN mvn clean install -DskipTests
 
 EXPOSE 8080
 
